@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public float movementSpeed = 6.0f;
+    public float movementSpeed = 7.0f;
 
     public float shotTime;
     public static string bulletName = "bullet";
@@ -18,6 +18,9 @@ public class PlayerControls : MonoBehaviour
     private Rigidbody rb;
 
     public SphereCollider colliderVar;
+    public BoxCollider boxColliderVar;
+
+    public Vector3 tempPosition;
 
     
 
@@ -29,12 +32,13 @@ public class PlayerControls : MonoBehaviour
     {
         shotTime = Time.time;
         rb = GetComponent<Rigidbody>();
-        colliderVar = GetComponent<SphereCollider>(); 
+        colliderVar = GetComponent<SphereCollider>();
+
+        Camera.main.transform.rotation = new Quaternion(0, 90, 0,0);
     }
 
     void movement()
     {
-        oldpos = pos;
         pos = transform.position;
 
 
@@ -42,17 +46,20 @@ public class PlayerControls : MonoBehaviour
         {
             //pos -= Vector3. (Camera.main.transform.forward, new Vector3(1,0,1)) * movementSpeed * time;
 
-            pos += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
+            rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time, ForceMode.Impulse);
+            //pos += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            pos -= new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
+            //pos -= new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
+            rb.AddForce(-new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time, ForceMode.Impulse);
+
         }
         if (Input.GetKey(KeyCode.A))
         {
             //pos -= Camera.main.transform.right * movementSpeed * time;
-
+            rb.AddForce(-Camera.main.transform.right * movementSpeed * time, ForceMode.Impulse);
         }
         if (Input.GetKey(KeyCode.D))
         {
@@ -62,8 +69,15 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && isGrounded())
         {
-            rb.AddForce(Vector3.up * movementSpeed, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * movementSpeed /2 , ForceMode.Impulse);
         }
+
+
+        //if(!Input.anyKey)
+        //{
+        //    rb.velocity = Vector3.zero;
+        //    //rb.angularVelocity = Vector3.zero;
+        //}
 
         //if (Input.GetKey(KeyCode.LeftShift))
         //{
@@ -71,7 +85,19 @@ public class PlayerControls : MonoBehaviour
         //}
 
         //Debug.Log(pos);
+        //tempPosition = pos;
+
+        //if(Physics.CheckBox(colliderVar.bounds.center,
+        //    new Vector3(colliderVar.bounds.center.x, colliderVar.bounds.min.y, colliderVar.bounds.center.z), boxColliderVar.bounds * .9f, mask))
+
         transform.position = pos;
+
+        //if (new Vector3(pos.x - oldpos.x, pos.y - oldpos.y, pos.z - oldpos.z).magnitude > .2)
+        //{
+        //    oldpos = pos;
+
+        //}
+            Camera.main.transform.position = pos + new Vector3(0, 4, 0);
 
         //Debug.Log("Camera: " + Camera.main.transform.forward);
         //Debug.Log("Pos: " + pos);
