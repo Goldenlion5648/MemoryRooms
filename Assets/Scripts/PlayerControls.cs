@@ -131,23 +131,23 @@ public class PlayerControls : MonoBehaviour
         //Debug.Log("shot time: " + shotTime);
         //Debug.Log("Time.time: " + Time.time) ;
 
-        if (Input.GetMouseButton(0))
-        {
-            if (Time.time - shotTime > 0.4f)
-            {
-                shotTime = Time.time;
-                GameObject currentBullet = GameObject.Instantiate<GameObject>(GameObject.Find("OGBullet"));
-                currentBullet.transform.rotation = Camera.main.transform.rotation;
-                currentBullet.transform.position = Camera.main.transform.position;
-                currentBullet.transform.name = bulletName + counter;
-                counter++;
-                //BulletScript.bulletList.Add(currentBullet);
+        //if (Input.GetMouseButton(0))
+        //{
+        //    if (Time.time - shotTime > 0.4f)
+        //    {
+        //        shotTime = Time.time;
+        //        GameObject currentBullet = GameObject.Instantiate<GameObject>(GameObject.Find("OGBullet"));
+        //        currentBullet.transform.rotation = Camera.main.transform.rotation;
+        //        currentBullet.transform.position = Camera.main.transform.position;
+        //        currentBullet.transform.name = bulletName + counter;
+        //        counter++;
+        //        //BulletScript.bulletList.Add(currentBullet);
 
-                Debug.Log("spawned bullet");
+        //        Debug.Log("spawned bullet");
 
-            }
+        //    }
 
-        }
+        //}
 
         
 

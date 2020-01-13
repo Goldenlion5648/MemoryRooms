@@ -11,12 +11,18 @@ public class MemoryGameScipt : MonoBehaviour
 
     int currentDim = 3;
     int numFilledIn = 0;
+
+    float showedTime =0 ;
     int numToAdd = -1;
 
 
     string cubePartName = "cubePart";
     string textPartName = "textNum";
     string filledInTag = "filledIn";
+
+    bool isShowing = true;
+
+    Color cubeColor = new Color(0, 0, 255);
 
 
     // Start is called before the first frame update
@@ -40,6 +46,7 @@ public class MemoryGameScipt : MonoBehaviour
 
     void makePattern()
     {
+        numFilledIn = 0;
         while(numFilledIn < currentDim * currentDim / 3 + numToAdd)
         {
             int randomTile = Random.Range(0, currentDim * currentDim);
@@ -47,11 +54,17 @@ public class MemoryGameScipt : MonoBehaviour
 
             if (currentObject.tag.Contains(filledInTag) == false)
             {
-                currentObject.tag += filledInTag;
+                currentObject.tag = filledInTag;
+
+                Renderer render = currentObject.GetComponent<Renderer>();
+                render.material.color = cubeColor;
                 numFilledIn++;
 
             }
         }
+        showedTime = Time.time;
+
+        Debug.Log("showedTime: " + showedTime);
     }
 
 
@@ -63,8 +76,8 @@ public class MemoryGameScipt : MonoBehaviour
             for (int x = 0; x < currentDim; x++)
             {
                 GameObject text = new GameObject();
-                TextMesh t = text.AddComponent<TextMesh>();
-                t.fontSize = 14;
+                //TextMesh t = text.AddComponent<TextMesh>();
+                //t.fontSize = 14;
 
                 GameObject newCube = Instantiate(originalCube,
                     new Vector3(originalCube.transform.position.x + x * offsetFromEachOther,
@@ -73,24 +86,57 @@ public class MemoryGameScipt : MonoBehaviour
                     Quaternion.identity);
 
                 newCube.name = cubePartName + total;
-
-                text.name = textPartName + total;
-
+                //newCube.transform.tag = "";
                 text.transform.parent = newCube.transform;
 
-                t.anchor = TextAnchor.MiddleCenter;
-                t.transform.position = new Vector3(newCube.transform.position.x, newCube.transform.position.y, newCube.transform.position.z - .5f);
-                t.text = total.ToString();
+                text.name = textPartName + total;
+                //t.color = new Color(0, 0, 0);
+
+
+                //t.anchor = TextAnchor.MiddleCenter;
+                //t.transform.position = new Vector3(newCube.transform.position.x, newCube.transform.position.y, newCube.transform.position.z - .5f);
+                //t.text = total.ToString();
 
                 total += 1;
             }
         }
+        makePattern();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log("Time: " + Time.time);
+
+        if (isShowing == true && Time.time - showedTime >= currentDim * currentDim * .3)
+        {
+            for (int i = 0; i < currentDim * currentDim; i++)
+            {
+                GameObject.Find(cubePartName + i).transform.GetComponent<Renderer>().material.color = new Color(255, 255, 255);
+            }
+            isShowing = false;
+        }
+
+        //if (isShowing == false)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit target;
+
+                //Gizmos.DrawLine
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target, 25) && target.collider.name.Contains(cubePartName))
+                {
+                Debug.DrawLine(Camera.main.transform.position, target.transform.position, Color.black, 5);
+
+                    Renderer r = target.transform.gameObject.GetComponent<Renderer>();
+
+                    r.material.SetColor("_Color", Color.blue);
+
+                    Debug.Log("Changed Color");
+
+                }
+            }
+        }
     }
 }
