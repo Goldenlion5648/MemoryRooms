@@ -24,11 +24,12 @@ public class MemoryGameScipt : MonoBehaviour
     public Text hintText;
     public Text livesText;
     public Text highestLevelText;
+    public Text instructText;
 
     float showedTime = 0;
     int numToAdd = -1;
 
-    Color defaultFloorColor = new Color(200, 10, 160);
+    Color defaultFloorColor = new Color(.3f, 0.0f, 0.7f, 1);
     Color hintColor = new Color(100, 180, 0);
 
 
@@ -102,14 +103,14 @@ public class MemoryGameScipt : MonoBehaviour
                 render.material.color = cubeColor;
                 numFilledIn++;
 
-                Debug.Log("correct tile: " + currentObject.name);
+                //Debug.Log("correct tile: " + currentObject.name);
 
             }
         }
         showedTime = Time.time;
         isShowing = true;
 
-        Debug.Log("showedTime: " + showedTime);
+        //Debug.Log("showedTime: " + showedTime);
 
         levelText.text = "Level: " + currentLevel;
         highestLevelText.text = "Highest Level\nGotten To: " + highestLevel;
@@ -182,13 +183,13 @@ public class MemoryGameScipt : MonoBehaviour
         {
             for (int x = 0; x < currentDim; x++)
             {
-                Debug.Log(cubePartName + total + " userClicked: " +
-                    GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked);
-                Debug.Log(cubePartName + total + " isFilledIn: " +
-                    GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn);
+                //Debug.Log(cubePartName + total + " userClicked: " +
+                    //GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked);
+                //Debug.Log(cubePartName + total + " isFilledIn: " +
+                    //GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn);
 
 
-                Debug.Log("numCorrect: " + numCorrect);
+                //Debug.Log("numCorrect: " + numCorrect);
                 if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn == true)
                 {
                     if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked == true)
@@ -313,7 +314,7 @@ public class MemoryGameScipt : MonoBehaviour
 
                         }
 
-                        Debug.Log("Changed Color of " + target.transform.name);
+                        //Debug.Log("Changed Color of " + target.transform.name);
                         //compareAnswer();
                     }
                 }
