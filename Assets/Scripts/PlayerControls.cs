@@ -15,7 +15,7 @@ public class PlayerControls : MonoBehaviour
     
     public float time;
 
-    private Rigidbody rb;
+    public static Rigidbody rb;
 
     public SphereCollider colliderVar;
     public BoxCollider boxColliderVar;
@@ -151,16 +151,16 @@ public class PlayerControls : MonoBehaviour
 
         
 
-        if (Input.GetMouseButtonDown(1))
-        {
+        //if (Input.GetMouseButtonDown(1))
+        //{
 
-            Cursor.visible = !Cursor.visible;
-            if (Cursor.lockState == CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.None;
-            else
-                Cursor.lockState = CursorLockMode.Locked;
+        //    Cursor.visible = !Cursor.visible;
+        //    if (Cursor.lockState == CursorLockMode.Locked)
+        //        Cursor.lockState = CursorLockMode.None;
+        //    else
+        //        Cursor.lockState = CursorLockMode.Locked;
 
-        }
+        //}
 
     }
 
