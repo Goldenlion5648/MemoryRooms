@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using sys = System;
+using UnityEngine.SceneManagement;
 
 public class MemoryGameScipt : MonoBehaviour
 {
     GameObject originalCube;
     GameObject player;
     int offsetFromOriginal = -2;
-    int offsetFromEachOther = 2;
+    float offsetFromEachOther = 1.5F;//was 2
 
-    int currentDim = 3;
+    public static int currentDim = 3;
     int numFilledIn = 0;
 
     float showedTime = 0;
@@ -58,6 +59,7 @@ public class MemoryGameScipt : MonoBehaviour
         for (int i = 0; i < currentDim * currentDim; i++)
         {
             GameObject.Find(cubePartName + i).GetComponent<cubeProperties>().userClicked = false;
+            GameObject.Find(cubePartName + i).GetComponent<cubeProperties>().isFilledIn = false;
             GameObject.Find(cubePartName + i).transform.GetComponent<Renderer>().material.color = new Color(255, 255, 255);
         }
 
@@ -87,9 +89,21 @@ public class MemoryGameScipt : MonoBehaviour
         Debug.Log("showedTime: " + showedTime);
     }
 
+    void removeCubes()
+    {
+
+        //GameObject.FindObjectsOfType(Cube)
+        for (int i = 0; i < currentDim * currentDim; i++)
+        {
+            Destroy(GameObject.Find(cubePartName + i));
+        }
+    }
+
+
 
     void setup()
     {
+        lastCubeLookedAtNum = 0;
         int total = 0;
         for (int y = currentDim; y > 0; y--)
         {
@@ -136,9 +150,16 @@ public class MemoryGameScipt : MonoBehaviour
         {
             for (int x = 0; x < currentDim; x++)
             {
-                if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked == true)
+                Debug.Log(cubePartName + total + " userClicked: " +
+                    GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked);
+                Debug.Log(cubePartName + total + " isFilledIn: " +
+                    GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn);
+
+
+                Debug.Log("numCorrect: " + numCorrect);
+                if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn == true)
                 {
-                    if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn == true)
+                    if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked == true)
                     {
                         numCorrect++;
                     }
@@ -150,7 +171,7 @@ public class MemoryGameScipt : MonoBehaviour
                 }
                 else
                 {
-                    if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().isFilledIn == false)
+                    if (GameObject.Find(cubePartName + total).GetComponent<cubeProperties>().userClicked == true)
                     {
                         return;
                     }
@@ -160,13 +181,16 @@ public class MemoryGameScipt : MonoBehaviour
             }
         }
 
-        if (numCorrect >= numFilledIn)
+        if (numCorrect == numFilledIn)
         {
             numToAdd += 1;
             if (numToAdd == 2)
             {
                 numToAdd = -1;
+                //removeCubes();
                 currentDim += 1;
+                //setup();
+                SceneManager.LoadScene("ClassicMemoryGame");
             }
 
             Debug.Log("Making new pattern");
@@ -236,6 +260,7 @@ public class MemoryGameScipt : MonoBehaviour
                         }
 
                         Debug.Log("Changed Color of " + target.transform.name);
+                        compareAnswer();
                     }
                 }
                 else
@@ -244,11 +269,12 @@ public class MemoryGameScipt : MonoBehaviour
 
                 }
 
-                compareAnswer();
+                //compareAnswer();
             }
             else
             {
-                GameObject.Find(cubePartName + lastCubeLookedAtNum).GetComponent<Renderer>().material.mainTexture = Texture2D.whiteTexture;
+                //if (lastCubeLookedAtNum != -1)
+                    GameObject.Find(cubePartName + lastCubeLookedAtNum).GetComponent<Renderer>().material.mainTexture = Texture2D.whiteTexture;
 
             }
         }
