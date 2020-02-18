@@ -238,6 +238,15 @@ public class MemoryGameScipt : MonoBehaviour
         }
     }
 
+    void resetGame()
+    {
+        currentDim = 3;
+        currentLevel = 0;
+        lives = 3;
+        hintsRemaining = 3;
+        SceneManager.LoadScene("ClassicMemoryGame");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -351,11 +360,13 @@ public class MemoryGameScipt : MonoBehaviour
                     lives -= 1;
                     if (lives <= 0)
                     {
-                        currentDim = 3;
-                        currentLevel = 0;
-                        lives = 3;
-                        hintsRemaining = 3;
-                        SceneManager.LoadScene("ClassicMemoryGame");
+                        //currentDim = 3;
+                        //currentLevel = 0;
+                        //lives = 3;
+                        //hintsRemaining = 3;
+                        //SceneManager.LoadScene("ClassicMemoryGame");
+
+                        resetGame();
                     }
                     else
                     {
@@ -383,6 +394,12 @@ public class MemoryGameScipt : MonoBehaviour
                 }
                 hintText.text = "Hints Remaining: " + hintsRemaining;
                 showedTime = Time.time;
+            }
+
+            if (Input.GetKey(KeyCode.R))
+            {
+                resetGame();
+
             }
         }
 

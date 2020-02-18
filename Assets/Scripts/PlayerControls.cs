@@ -42,35 +42,35 @@ public class PlayerControls : MonoBehaviour
         pos = transform.position;
 
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            //pos -= Vector3. (Camera.main.transform.forward, new Vector3(1,0,1)) * movementSpeed * time;
+        //if (Input.GetKey(KeyCode.W))
+        //{
+        //    //pos -= Vector3. (Camera.main.transform.forward, new Vector3(1,0,1)) * movementSpeed * time;
 
-            rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time, ForceMode.Impulse);
-            //pos += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
-        }
+        //    rb.AddForce(new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time, ForceMode.Impulse);
+        //    //pos += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
+        //}
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            //pos -= new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
-            rb.AddForce(-new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time, ForceMode.Impulse);
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    //pos -= new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time;
+        //    rb.AddForce(-new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * movementSpeed * time, ForceMode.Impulse);
 
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            //pos -= Camera.main.transform.right * movementSpeed * time;
-            rb.AddForce(-Camera.main.transform.right * movementSpeed * time, ForceMode.Impulse);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(Camera.main.transform.right * movementSpeed * time, ForceMode.Impulse);
-            //pos += Camera.main.transform.right * movementSpeed * time;
-        }
+        //}
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    //pos -= Camera.main.transform.right * movementSpeed * time;
+        //    rb.AddForce(-Camera.main.transform.right * movementSpeed * time, ForceMode.Impulse);
+        //}
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    rb.AddForce(Camera.main.transform.right * movementSpeed * time, ForceMode.Impulse);
+        //    //pos += Camera.main.transform.right * movementSpeed * time;
+        //}
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded())
-        {
-            rb.AddForce(Vector3.up * movementSpeed /2 , ForceMode.Impulse);
-        }
+        //if (Input.GetKey(KeyCode.Space) && isGrounded())
+        //{
+        //    rb.AddForce(Vector3.up * movementSpeed /2 , ForceMode.Impulse);
+        //}
 
 
         //if(!Input.anyKey)
